@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PlantAI - Plant Disease Detection</title>
+
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">
+    🌿
+</div>
+            <div>
+                <h2>Plant<span>AI</span></h2>
+                <small>Smart Plant Health</small>
+            </div>
+        </div>
+
+        <nav>
+
+            <button class="nav-item active" onclick="showPage('home', this)">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </button>
+
+            <button class="nav-item" onclick="showPage('dashboard', this)">
+                <i class="fa-solid fa-chart-pie"></i>
+                <span>Dashboard</span>
+            </button>
+
+            <button class="nav-item" onclick="showPage('scanner', this)">
+                <i class="fa-solid fa-camera"></i>
+                <span>Scan Plant</span>
+            </button>
+
+            <button class="nav-item" onclick="showPage('model', this)">
+                <i class="fa-solid fa-brain"></i>
+                <span>AI Model</span>
+            </button>
+
+            <button class="nav-item" onclick="showPage('history', this)">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                <span>History</span>
+            </button>
+
+            <button class="nav-item" onclick="showPage('about', this)">
+                <i class="fa-solid fa-circle-info"></i>
+                <span>About</span>
+            </button>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="model-status">
+                <span class="status-dot"></span>
+                AI Model Online
+            </div>
+
+            <small>Plant Disease Detection</small>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- TOP BAR -->
+        <header class="topbar">
+
+            <div>
+                <div class="breadcrumb">PLANT HEALTH / AI SYSTEM</div>
+                <h1 id="pageTitle">Plant Disease Detection</h1>
+            </div>
+
+            <div class="top-badge">
+                <span></span>
+                System Ready
+            </div>
+
+        </header>
+
+
+        <!-- HOME -->
+        <section id="home" class="page active-page">
+
+            <div class="hero">
+
+                <div class="hero-content">
+
+                    <div class="tag">
+                        <i class="fa-solid fa-sparkles"></i>
+                        AI POWERED PLANT ANALYSIS
+                    </div>
+
+                    <h1>
+                        Detect Plant Diseases
+                        <span>Instantly.</span>
+                    </h1>
+
+                    <p>
+                        Upload a plant leaf image and let our AI model
+                        identify possible diseases with confidence.
+                    </p>
+
+                    <button class="primary-btn"
+                            onclick="showPageByName('scanner')">
+
+                        <i class="fa-solid fa-camera"></i>
+                        Start Plant Scan
+
+                    </button>
+
+                </div>
+
+                <div class="hero-visual">
+
+                    <div class="leaf-circle">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+
+                    <div class="floating-card card-one">
+                        <i class="fa-solid fa-bolt"></i>
+                        <div>
+                            <strong>Fast Analysis</strong>
+                            <small>AI Prediction</small>
+                        </div>
+                    </div>
+
+                    <div class="floating-card card-two">
+                        <i class="fa-solid fa-shield-heart"></i>
+                        <div>
+                            <strong>Plant Health</strong>
+                            <small>Smart Detection</small>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="section-title">
+                <div>
+                    <span>OVERVIEW</span>
+                    <h2>System at a glance</h2>
+                </div>
+            </div>
+
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+
+                    <div>
+                        <small>SUPPORTED CLASSES</small>
+                        <h2>{{ class_count }}</h2>
+                    </div>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+
+                    <div>
+                        <small>AI MODEL</small>
+                        <h2>EfficientNetB0</h2>
+                    </div>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+
+                    <div>
+                        <small>MODEL ACCURACY</small>
+                        <h2>94.08%</h2>
+                    </div>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-icon purple">
+                        <i class="fa-solid fa-image"></i>
+                    </div>
+
+                    <div>
+                        <small>IMAGE SIZE</small>
+                        <h2>224 × 224</h2>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- DASHBOARD -->
+        <section id="dashboard" class="page">
+
+            <div class="page-heading">
+                <div>
+                    <span>DASHBOARD</span>
+                    <h2>Plant Health Overview</h2>
+                    <p>Monitor your AI plant disease analysis.</p>
+                </div>
+
+                <button class="primary-btn small"
+                        onclick="showPageByName('scanner')">
+                    <i class="fa-solid fa-plus"></i>
+                    New Scan
+                </button>
+            </div>
+
+
+            <div class="dashboard-grid">
+
+                <div class="dashboard-card large-card">
+
+                    <div class="card-header">
+                        <div>
+                            <small>MODEL PERFORMANCE</small>
+                            <h3>AI Detection System</h3>
+                        </div>
+
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+
+                    <div class="performance">
+
+                        <div class="performance-circle">
+                            <strong>94%</strong>
+                            <span>Accuracy</span>
+                        </div>
+
+                        <div class="performance-info">
+
+                            <div>
+                                <span>Precision</span>
+                                <strong>94.50%</strong>
+                            </div>
+
+                            <div>
+                                <span>Recall</span>
+                                <strong>94.08%</strong>
+                            </div>
+
+                            <div>
+                                <span>F1 Score</span>
+                                <strong>94.10%</strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-card">
+
+                    <div class="card-header">
+                        <div>
+                            <small>MODEL</small>
+                            <h3>Architecture</h3>
+                        </div>
+
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+
+                    <div class="model-name">
+                        EfficientNetB0
+                    </div>
+
+                    <p class="muted">
+                        Transfer learning model trained for plant
+                        disease classification.
+                    </p>
+
+                </div>
+
+
+                <div class="dashboard-card">
+
+                    <div class="card-header">
+                        <div>
+                            <small>DATASET</small>
+                            <h3>PlantVillage</h3>
+                        </div>
+
+                        <i class="fa-solid fa-database"></i>
+                    </div>
+
+                    <div class="dataset-number">
+                        20,638
+                    </div>
+
+                    <p class="muted">
+                        Images used during model development.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="quick-actions">
+
+                <div onclick="showPageByName('scanner')">
+                    <i class="fa-solid fa-camera"></i>
+                    <div>
+                        <strong>Scan a Plant</strong>
+                        <small>Upload leaf image</small>
+                    </div>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+
+                <div onclick="showPageByName('model')">
+                    <i class="fa-solid fa-brain"></i>
+                    <div>
+                        <strong>View AI Model</strong>
+                        <small>Model information</small>
+                    </div>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+
+                <div onclick="showPageByName('history')">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <div>
+                        <strong>Prediction History</strong>
+                        <small>View previous scans</small>
+                    </div>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SCANNER -->
+        <section id="scanner" class="page">
+
+            <div class="page-heading">
+                <div>
+                    <span>AI SCANNER</span>
+                    <h2>Analyze Your Plant</h2>
+                    <p>Upload a clear image of a plant leaf.</p>
+                </div>
+            </div>
+
+
+            <div class="scanner-layout">
+
+                <div class="upload-card">
+
+                    <div id="uploadArea" class="upload-area">
+
+                        <div class="upload-icon">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                        </div>
+
+                        <h3>Drop your leaf image here</h3>
+
+                        <p>
+                            or click below to choose an image
+                        </p>
+
+                        <input type="file"
+                               id="imageInput"
+                               accept="image/*"
+                               hidden>
+
+                        <button class="upload-btn"
+                                onclick="document.getElementById('imageInput').click()">
+
+                            <i class="fa-solid fa-folder-open"></i>
+                            Choose Image
+
+                        </button>
+
+                        <small>JPG, JPEG or PNG</small>
+
+                    </div>
+
+
+                    <div id="previewBox" class="preview-box hidden">
+
+                        <img id="previewImage">
+
+                        <div class="preview-actions">
+
+                            <button class="secondary-btn"
+                                    onclick="chooseAnother()">
+                                Change Image
+                            </button>
+
+                            <button id="analyzeBtn"
+                                    class="primary-btn">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                Analyze Plant
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RESULT -->
+                <div id="resultCard" class="result-card">
+
+                    <div class="result-empty">
+
+                        <div class="result-icon">
+                            <i class="fa-solid fa-microscope"></i>
+                        </div>
+
+                        <h3>AI Result</h3>
+
+                        <p>
+                            Your prediction will appear here after
+                            image analysis.
+                        </p>
+
+                    </div>
+
+
+                    <div id="resultContent" class="hidden">
+
+                        <div class="result-top">
+
+                            <div>
+                                <small>PREDICTED CONDITION</small>
+                                <h2 id="diseaseName">---</h2>
+                            </div>
+
+                            <div id="statusBadge" class="status-badge">
+                                ---
+                            </div>
+
+                        </div>
+
+
+                        <div class="confidence">
+
+                            <div class="confidence-label">
+                                <span>Confidence</span>
+                                <strong id="confidenceText">0%</strong>
+                            </div>
+
+                            <div class="progress">
+                                <div id="confidenceBar"></div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="result-message">
+
+                            <i class="fa-solid fa-circle-info"></i>
+
+                            <p id="resultMessage"></p>
+
+                        </div>
+
+
+                        <div class="care-box">
+
+                            <strong>
+                                <i class="fa-solid fa-leaf"></i>
+                                Care Suggestion
+                            </strong>
+
+                            <p id="careText"></p>
+
+                        </div>
+
+
+                        <div class="top-predictions">
+
+                            <h4>Top Predictions</h4>
+
+                            <div id="topPredictions"></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MODEL -->
+        <section id="model" class="page">
+
+            <div class="page-heading">
+                <div>
+                    <span>AI TECHNOLOGY</span>
+                    <h2>Model Information</h2>
+                    <p>Technical details of the plant disease detection model.</p>
+                </div>
+            </div>
+
+
+            <div class="model-hero">
+
+                <div class="big-model-icon">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+
+                <div>
+                    <small>DEEP LEARNING MODEL</small>
+                    <h2>EfficientNetB0</h2>
+                    <p>
+                        A convolutional neural network used with
+                        transfer learning for plant disease classification.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="info-grid">
+
+                <div class="info-card">
+                    <i class="fa-solid fa-bullseye"></i>
+                    <small>Accuracy</small>
+                    <strong>94.08%</strong>
+                </div>
+
+                <div class="info-card">
+                    <i class="fa-solid fa-crosshairs"></i>
+                    <small>Precision</small>
+                    <strong>94.50%</strong>
+                </div>
+
+                <div class="info-card">
+                    <i class="fa-solid fa-rotate"></i>
+                    <small>Recall</small>
+                    <strong>94.08%</strong>
+                </div>
+
+                <div class="info-card">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    <small>F1 Score</small>
+                    <strong>94.10%</strong>
+                </div>
+
+            </div>
+
+
+            <div class="technical-card">
+
+                <h3>Model Configuration</h3>
+
+                <div class="tech-row">
+                    <span>Architecture</span>
+                    <strong>EfficientNetB0</strong>
+                </div>
+
+                <div class="tech-row">
+                    <span>Input Image</span>
+                    <strong>224 × 224</strong>
+                </div>
+
+                <div class="tech-row">
+                    <span>Number of Classes</span>
+                    <strong>{{ class_count }}</strong>
+                </div>
+
+                <div class="tech-row">
+                    <span>Training Epochs</span>
+                    <strong>20</strong>
+                </div>
+
+                <div class="tech-row">
+                    <span>Batch Size</span>
+                    <strong>32</strong>
+                </div>
+
+                <div class="tech-row">
+                    <span>Dataset</span>
+                    <strong>PlantVillage</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- HISTORY -->
+        <section id="history" class="page">
+
+            <div class="page-heading">
+
+                <div>
+                    <span>SCAN HISTORY</span>
+                    <h2>Previous Predictions</h2>
+                    <p>Your recent plant disease analyses.</p>
+                </div>
+
+                <button class="secondary-btn"
+                        onclick="clearHistory()">
+
+                    <i class="fa-solid fa-trash"></i>
+                    Clear History
+
+                </button>
+
+            </div>
+
+
+            <div id="historyList" class="history-list">
+
+                <div class="empty-history">
+
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                    <h3>No predictions yet</h3>
+
+                    <p>
+                        Scan a plant to create your prediction history.
+                    </p>
+
+                    <button class="primary-btn"
+                            onclick="showPageByName('scanner')">
+
+                        Start First Scan
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ABOUT -->
+        <section id="about" class="page">
+
+            <div class="page-heading">
+                <div>
+                    <span>ABOUT PROJECT</span>
+                    <h2>Plant Disease Detection</h2>
+                    <p>AI-based plant health analysis system.</p>
+                </div>
+            </div>
+
+
+            <div class="about-card">
+
+                <div class="about-logo">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+
+                <h2>PlantAI</h2>
+
+                <p>
+                    PlantAI is a deep learning based plant disease
+                    detection system designed to analyze plant leaf
+                    images and identify possible diseases.
+                </p>
+
+                <p>
+                    The system uses the PlantVillage dataset and an
+                    EfficientNetB0 model trained for 15 plant disease
+                    classes.
+                </p>
+
+                <div class="about-features">
+
+                    <div>
+                        <i class="fa-solid fa-camera"></i>
+                        <strong>Image Analysis</strong>
+                        <span>Upload plant leaf images</span>
+                    </div>
+
+                    <div>
+                        <i class="fa-solid fa-brain"></i>
+                        <strong>Deep Learning</strong>
+                        <span>EfficientNetB0 model</span>
+                    </div>
+
+                    <div>
+                        <i class="fa-solid fa-chart-line"></i>
+                        <strong>Confidence</strong>
+                        <span>Prediction confidence score</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
+
+
+
